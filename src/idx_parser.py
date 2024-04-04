@@ -1,6 +1,7 @@
 import re
 
 def extract_three_strings(input_string):
+    input_string = input_string.replace('\\', '')
     pattern = r'^([^/]+)(?:/([^/]+))?(?:/([^/]+))?$'
     match = re.match(pattern, input_string)
     return match.groups() if match else None
