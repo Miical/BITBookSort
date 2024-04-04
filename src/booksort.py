@@ -5,17 +5,18 @@ from compare import bookidx_cmp
 from functools import cmp_to_key
 
 def load_file():
-    file_path = input("请输入书单表格路径: ")
+    while True:
+        file_path = input("请输入书单表格路径: ")
 
-    try:
-        workbook = load_workbook(file_path)
-        _ = workbook.sheetnames
-        print(f"文件 {file_path} 加载成功。")
-        return workbook
-    except FileNotFoundError:
-        print("文件不存在，请检查路径是否正确。")
-    except Exception as e:
-        print("错误:", e)
+        try:
+            workbook = load_workbook(file_path)
+            _ = workbook.sheetnames
+            print(f"文件 {file_path} 加载成功。")
+            return workbook
+        except FileNotFoundError:
+            print("文件不存在，请检查路径是否正确。")
+        except Exception as e:
+            print("错误:", e)
 
 def sort_by_book_idx(booklist, columns_idx):
     def key_func(item1, item2):
@@ -34,6 +35,7 @@ if __name__ == '__main__':
 
     if selected_sheet_index < 0 or selected_sheet_index >= len(sheet_names):
         print("选择的sheet编号无效，请重新运行程序并输入正确的编号。")
+        input("按回车键退出...")
         exit(1)
 
     selected_sheet_name = sheet_names[selected_sheet_index]
@@ -50,6 +52,7 @@ if __name__ == '__main__':
 
     if selected_column_index < 0 or selected_column_index >= len(columns_info):
         print("选择的列编号无效，请重新运行程序并输入正确的编号。")
+        input("按回车键退出...")
         exit(0)
 
     # Parse and Sort
@@ -88,3 +91,4 @@ if __name__ == '__main__':
     new_file_path = 'sorted_booklist.xlsx'
     new_workbook.save(new_file_path)
     print(f"排序后的新表格已保存至 {new_file_path}。")
+    input("按回车键退出...")
